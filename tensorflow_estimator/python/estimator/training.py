@@ -88,22 +88,22 @@ def _validate_exporters(exporters):
         # Error message will be printed out by the outer try/except.
         raise TypeError
 
-      if not exporter.name:
+      if not exporter.name():
         full_list_of_names = [e.name for e in exporters]
         raise ValueError('An Exporter cannot have a name that is `None` or'
                          ' empty. All exporter names:'
                          ' {}'.format(full_list_of_names))
 
-      if not isinstance(exporter.name, six.string_types):
+      if not isinstance(exporter.name(), six.string_types):
         raise ValueError('An Exporter must have a string name. Given: '
-                         '{}'.format(type(exporter.name)))
+                         '{}'.format(type(exporter.name())))
 
-      if exporter.name in unique_names:
+      if exporter.name() in unique_names:
         full_list_of_names = [e.name for e in exporters]
         raise ValueError(
             '`exporters` must have unique names. Such a name cannot be `None`.'
             ' All exporter names: {}'.format(full_list_of_names))
-      unique_names.append(exporter.name)
+      unique_names.append(exporter.name())
   except TypeError:
     # Two possibilities:
     # - `exporters` is neither `Exporter` nor iterable.  Python has
